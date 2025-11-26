@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .success-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 30px;
+        text-align: center;
+        background: #ffebf5; /* Light pink background */
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        font-family: 'Optima', sans-serif;
+    }
+
+    .success-icon {
+        font-size: 60px;
+        color: #e91e63; /* Deep pink */
+    }
+
+    .success-container h2 {
+        color: #d81b60;
+        font-weight: bold;
+    }
+
+    .order-details {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 15px;
+        text-align: left;
+    }
+
+    .order-details p {
+        margin: 5px 0;
+        font-size: 16px;
+    }
+
+    .btn-home {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background: #e91e63;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .btn-home:hover {
+        background: #c2185b;
+    }
+</style>
+
+<div class="container">
+    <div class="success-container">
+        <div class="success-icon">🎉</div>
+        <h2>Payment Successful!</h2>
+        <p>Thank you for your purchase! 💖</p>
+
+        <div class="order-details">
+            <p><strong>Order ID:</strong> #{{ order.id }}</p>
+            <p><strong>Name:</strong> {{ request.user.username }}</p>
+            <p><strong>Email:</strong> {{ request.user.email }}</p>
+            <p><strong>Shipping Address:</strong> {{ shipping_address }}</p>
+            <p><strong>Amount Paid:</strong> ₹{{ product.price }}</p>
+        </div>
+
+        <a href="{% url 'home' %}" class="btn-home">🏠 Back to Home</a>
+    </div>
+</div>
+{% endblock %}

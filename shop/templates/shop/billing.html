@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Order Summary</h2>
+<table class="table">
+    <tr><th>Product:</th> <td>{{ order.product.name }}</td></tr>
+    <tr><th>Quantity:</th> <td>{{ order.quantity }}</td></tr>
+    <tr><th>Total Price:</th> <td>₹{{ order.total_price }}</td></tr>
+</table>
+
+<!-- Fake Pay Now Button -->
+<form action="{% url 'fake_payment' order.id %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">Pay Now</button>
+</form>
+{% endblock %}

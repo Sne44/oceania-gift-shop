@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Payment Failed ❌</h2>
+    <p>Invalid card details. Please try again.</p>
+    <a href="{% url 'checkout' product.id %}" class="btn btn-warning">Retry Payment</a>
+</div>
+{% endblock %}

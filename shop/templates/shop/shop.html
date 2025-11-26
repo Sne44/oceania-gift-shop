@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container text-center">
+    <h2>Our Gift Collection</h2>
+    <p>Browse our beautiful gifts for every occasion.</p>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description }}</p>
+                        <p class="text-danger">${{ product.price }}</p>
+                        <!-- Buy Now Button -->
+                        <a href="{% url 'checkout' product.id %}" class="btn btn-primary">Buy Now</a>
+                        <!-- Add to Cart Button -->
+                        <form method="POST" action="{% url 'add_to_cart' product.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-warning">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No products available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

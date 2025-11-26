@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- Welcome Section -->
+<div class="hero-section text-center mt-4" data-aos="fade-up">
+    <h1>💝 Welcome to Oceania Gift Shop 💝</h1>
+    <p>Find the perfect gifts for every occasion.</p>
+    <a href="{% url 'shop' %}" class="btn btn-primary btn-lg mt-3" data-aos="zoom-in">Shop Now</a>
+</div>
+
+<!-- 🎁 Exclusive Offers Section -->
+<div class="container mt-5">
+    <h3 class="text-center text-danger" data-aos="fade-up">🔥 Exclusive Offers 🔥</h3>
+    <div class="row">
+        <div class="col-md-4" data-aos="zoom-in">
+            <div class="offer-box bg-warning text-dark p-4 text-center">
+                <h4>🎂 Birthday Special</h4>
+                <p>Get 20% off on birthday gifts!</p>
+                <a href="{% url 'shop' %}" class="btn btn-dark">Shop Now</a>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="zoom-in">
+            <div class="offer-box bg-danger text-white p-4 text-center">
+                <h4>💖 Valentine's Collection</h4>
+                <p>Flat 25% off on couple gifts!</p>
+                <a href="{% url 'shop' %}" class="btn btn-light">Explore</a>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="zoom-in">
+            <div class="offer-box bg-success text-white p-4 text-center">
+                <h4>🎁 First Order Discount</h4>
+                <p>Use code <strong>WELCOME10</strong> for 10% off!</p>
+                <a href="{% url 'shop' %}" class="btn btn-light">Grab Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Products -->
+<div class="container mt-5">
+    <h3 class="text-center" data-aos="fade-up">🌸 Featured Products 🌸</h3>
+    <div class="row">
+        {% for product in featured_products %}
+            <div class="col-md-4" data-aos="zoom-in">
+                <div class="card product-card">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description }}</p>
+                        <p class="text-danger"><strong>₹{{ product.price }}</strong></p>
+                        <a href="{% url 'checkout' product.id %}" class="btn btn-primary">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center">No featured products available.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

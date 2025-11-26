@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Payment Successful 🎉</h2>
+    <p>Thank you for your purchase!</p>
+    <p><strong>Order ID:</strong> {{ order.id }}</p>
+    <p><strong>Name:</strong> {{ order.user.username }}</p>
+    <p><strong>Email:</strong> {{ order.user.email }}</p>
+    <p><strong>Shipping Address:</strong> {{ order.shipping_address }}</p>
+    <p><strong>Amount Paid:</strong> ₹{{ order.total_price }}</p>
+    
+    <a href="{% url 'home' %}" class="btn btn-primary">Return to Home</a>
+</div>
+{% endblock %}

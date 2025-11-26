@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h2>Enter Payment Details</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="card_number">Card Number:</label>
+        <input type="text" name="card_number" required class="form-control" placeholder="1234 5678 9101 1121">
+        
+        <label for="expiry_date">Expiry Date:</label>
+        <input type="text" name="expiry_date" required class="form-control" placeholder="MM/YY">
+        
+        <label for="cvv">CVV:</label>
+        <input type="text" name="cvv" required class="form-control" placeholder="123">
+        
+        <button type="submit" class="btn btn-success">Pay Now</button>
+    </form>
+</div>
+{% endblock %}

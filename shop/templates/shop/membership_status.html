@@ -1,0 +1,13 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+<h2>Membership Status</h2>
+
+{% if membership %}
+    <p>You are a <strong>Premium Member</strong>! 🎉</p>
+    <p>Enjoy a <strong>{{ membership.discount_percentage }}%</strong> discount on all purchases.</p>
+{% else %}
+    <p>You are not a premium member yet.</p>
+    <a href="{% url 'subscribe_membership' %}" class="btn btn-primary">Subscribe Now</a>
+{% endif %}
+
+{% endblock %}

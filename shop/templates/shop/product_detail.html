@@ -1,0 +1,18 @@
+<h3>Reviews</h3>
+{% if product.reviews.all %}
+    <ul>
+        {% for review in product.reviews.all %}
+            <li><strong>{{ review.user.username }}</strong> - {{ review.rating }}⭐ - {{ review.comment }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No reviews yet. Be the first to leave a review!</p>
+{% endif %}
+
+<!-- Add Review Form -->
+<h3>Leave a Review</h3>
+<form action="{% url 'add_review' product.id %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Submit Review</button>
+</form>
