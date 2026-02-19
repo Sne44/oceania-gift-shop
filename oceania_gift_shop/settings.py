@@ -75,15 +75,26 @@ WSGI_APPLICATION = 'oceania_gift_shop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'project',
-        'USER' : 'root',
-        'PASSWORD':'snekuttu',
-        'HOST':'localhost',
+if 'PYTHONANYWHERE_DOMAIN' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'Oceaniagifts$default',  # Using the one from your screenshot
+            'USER': 'Oceaniagifts',
+            'PASSWORD': 'YOUR_PYTHONANYWHERE_MYSQL_PASSWORD', # YOU NEED TO UPDATE THIS
+            'HOST': 'Oceaniagifts.mysql.pythonanywhere-services.com',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'project',
+            'USER': 'root',
+            'PASSWORD': 'snekuttu',
+            'HOST': 'localhost',
+        }
+    }
 
 
 # Password validation
