@@ -3,7 +3,10 @@ import os
 import django
 import sys
 
-sys.path.append(r"d:\django\oceania_gift_shop")
+if 'PYTHONANYWHERE_DOMAIN' in os.environ:
+    sys.path.append("/home/Oceaniagifts/oceania_gift_shop")
+else:
+    sys.path.append(r"d:\django\oceania_gift_shop")
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'oceania_gift_shop.settings')
 django.setup()
 
