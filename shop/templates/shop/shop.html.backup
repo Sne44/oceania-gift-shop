@@ -29,7 +29,8 @@
                         <select name="category" class="form-select filter-select">
                             <option value="">All Categories</option>
                             {% for category in categories %}
-                            <option value="{{ category.id }}" {% if selected_category == category.id %}selected{% endif %}>
+                            <option value="{{ category.id }}" {% if selected_category==category.id %}selected{% endif
+                                %}>
                                 {{ category.name }}
                             </option>
                             {% endfor %}
@@ -56,10 +57,12 @@
                         <label class="filter-label">Sort By</label>
                         <select name="sort" class="form-select filter-select">
                             <option value="">Default</option>
-                            <option value="price_low" {% if sort_by == 'price_low' %}selected{% endif %}>Price: Low to High</option>
-                            <option value="price_high" {% if sort_by == 'price_high' %}selected{% endif %}>Price: High to Low</option>
-                            <option value="newest" {% if sort_by == 'newest' %}selected{% endif %}>Newest First</option>
-                            <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Name (A-Z)</option>
+                            <option value="price_low" {% if sort_by=='price_low' %}selected{% endif %}>Price: Low to
+                                High</option>
+                            <option value="price_high" {% if sort_by=='price_high' %}selected{% endif %}>Price: High to
+                                Low</option>
+                            <option value="newest" {% if sort_by=='newest' %}selected{% endif %}>Newest First</option>
+                            <option value="name" {% if sort_by=='name' %}selected{% endif %}>Name (A-Z)</option>
                         </select>
                     </div>
 
@@ -84,7 +87,7 @@
                         <div class="product-body">
                             <h6 class="product-title">{{ product.name }}</h6>
                             <p class="product-description">{{ product.description|truncatewords:8 }}</p>
-                            <p class="product-price">₹{{ product.price }}</p>
+                            <p class="product-price">${{ product.price }}</p>
                             <div class="product-actions">
                                 <a href="{% url 'checkout' product.id %}" class="btn btn-buy">Buy Now</a>
                                 <form method="POST" action="{% url 'add_to_cart' product.id %}" style="display:inline;">

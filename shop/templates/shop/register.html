@@ -1,13 +1,393 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2>Register</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Register</button>
-    </form>
-    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+<div class="register-page-wrapper">
+    <div class="container">
+        <div class="row justify-content-center align-items-center" style="min-height: 85vh; padding: 20px 0;">
+            <div class="col-md-6 col-lg-5">
+                <div class="register-card" data-aos="zoom-in" data-aos-duration="800">
+                    <div class="register-header text-center">
+                        <div class="register-icon" data-aos="flip-down" data-aos-delay="300">🎁</div>
+                        <h2 data-aos="fade-down" data-aos-delay="400">Join Us!</h2>
+                        <p data-aos="fade-up" data-aos-delay="500">Create your account and start shopping</p>
+                    </div>
+
+                    <div class="register-body">
+                        <form method="post">
+                            {% csrf_token %}
+
+                            {% if form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert" data-aos="shake">
+                                {{ form.non_field_errors|striptags }}
+                            </div>
+                            {% endif %}
+
+                            {% for field in form %}
+                            <div class="mb-0" data-aos="fade-right" data-aos-delay="{{ forloop.counter }}00">
+                                <label for="{{ field.id_for_label }}" class="form-label">
+                                    {% if 'username' in field.name %}
+                                    <i class="fas fa-user me-2"></i>
+                                    {% elif 'email' in field.name %}
+                                    <i class="fas fa-envelope me-2"></i>
+                                    {% elif 'password' in field.name %}
+                                    <i class="fas fa-lock me-2"></i>
+                                    {% else %}
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    {% endif %}
+                                    {{ field.label }}
+                                </label>
+                                <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}"
+                                    id="{{ field.id_for_label }}" class="form-control form-control-lg animated-input"
+                                    placeholder="Enter your {{ field.label|lower }}"
+                                    value="{{ field.value|default:'' }}">
+                                {% if field.errors %}
+                                <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+                                {% endif %}
+                                {% if field.help_text %}
+                                <div class="form-text small">{{ field.help_text|safe }}</div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+
+                            <div class="d-grid gap-2 mt-2" data-aos="fade-up" data-aos-delay="800">
+                                <button type="submit" class="btn btn-primary btn-lg animated-button">
+                                    <span>Create Account</span>
+                                    <i class="fas fa-user-plus ms-2"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="register-footer text-center" data-aos="fade-up" data-aos-delay="900">
+                        <p>Already have an account? <a href="{% url 'login' %}">Login here!</a></p>
+                    </div>
+                </div>
+
+                <!-- Floating Decorations -->
+                <div class="floating-shape shape-1"></div>
+                <div class="floating-shape shape-2"></div>
+                <div class="floating-shape shape-3"></div>
+                <div class="floating-shape shape-4"></div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    .register-page-wrapper {
+        background: linear-gradient(135deg, #ffeef8 0%, #fff5f7 50%, #ffe8f5 100%);
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Floating Shapes Animation */
+    .floating-shape {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.1;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .shape-1 {
+        width: 120px;
+        height: 120px;
+        background: linear-gradient(135deg, #ff1493, #ff69b4);
+        top: 5%;
+        left: 8%;
+        animation-delay: 0s;
+    }
+
+    .shape-2 {
+        width: 90px;
+        height: 90px;
+        background: linear-gradient(135deg, #ffd700, #ff8c00);
+        top: 50%;
+        right: 10%;
+        animation-delay: 2s;
+    }
+
+    .shape-3 {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, #ff69b4, #ff8c00);
+        bottom: 15%;
+        left: 15%;
+        animation-delay: 4s;
+    }
+
+    .shape-4 {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, #2ecc71, #27ae60);
+        top: 70%;
+        right: 20%;
+        animation-delay: 1s;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0px) rotate(0deg);
+        }
+
+        50% {
+            transform: translateY(-30px) rotate(180deg);
+        }
+    }
+
+    .register-card {
+        background: white;
+        border-radius: 30px;
+        box-shadow: 0 25px 70px rgba(255, 20, 147, 0.25);
+        overflow: hidden;
+        position: relative;
+        animation: cardPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes cardPulse {
+
+        0%,
+        100% {
+            box-shadow: 0 25px 70px rgba(255, 20, 147, 0.25);
+        }
+
+        50% {
+            box-shadow: 0 30px 80px rgba(255, 20, 147, 0.35);
+        }
+    }
+
+    .register-header {
+        background: linear-gradient(135deg, #2ecc71, #27ae60, #1abc9c);
+        background-size: 200% 200%;
+        padding: 12px 20px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        animation: gradientShift 5s ease infinite;
+    }
+
+    @keyframes gradientShift {
+
+        0%,
+        100% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+    }
+
+    .register-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: repeating-linear-gradient(45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.05) 10px,
+                rgba(255, 255, 255, 0.05) 20px);
+        animation: movePattern 20s linear infinite;
+    }
+
+    @keyframes movePattern {
+        0% {
+            transform: translate(0, 0);
+        }
+
+        100% {
+            transform: translate(50px, 50px);
+        }
+    }
+
+    .register-icon {
+        font-size: 1.5rem;
+        margin-bottom: 3px;
+        animation: iconSpin 3s ease-in-out infinite;
+        position: relative;
+        z-index: 1;
+        display: inline-block;
+    }
+
+    @keyframes iconSpin {
+
+        0%,
+        100% {
+            transform: rotate(0deg) scale(1);
+        }
+
+        50% {
+            transform: rotate(360deg) scale(1.1);
+        }
+    }
+
+    .register-header h2 {
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 2px;
+        position: relative;
+        z-index: 1;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .register-header p {
+        opacity: 0.95;
+        margin: 0;
+        position: relative;
+        z-index: 1;
+        font-size: 0.85rem;
+    }
+
+    .register-body {
+        padding: 10px 20px;
+    }
+
+    .register-body .form-label {
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 0.8rem;
+        margin-bottom: 2px;
+        display: flex;
+        align-items: center;
+    }
+
+    .register-body .form-label i {
+        color: #2ecc71;
+    }
+
+    .animated-input {
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 5px 10px;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        background: #f8f9fa;
+    }
+
+    .animated-input:focus {
+        border-color: #2ecc71;
+        box-shadow: 0 0 0 0.3rem rgba(46, 204, 113, 0.2);
+        transform: translateY(-3px);
+        background: white;
+    }
+
+    .animated-button {
+        background: linear-gradient(135deg, #2ecc71, #27ae60, #1abc9c);
+        background-size: 200% 200%;
+        border: none;
+        border-radius: 12px;
+        padding: 6px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        transition: all 0.4s ease;
+        box-shadow: 0 10px 25px rgba(46, 204, 113, 0.4);
+        position: relative;
+        overflow: hidden;
+        animation: gradientShift 3s ease infinite;
+    }
+
+    .animated-button::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+
+    .animated-button:hover::before {
+        width: 400px;
+        height: 400px;
+    }
+
+    .animated-button:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 15px 35px rgba(46, 204, 113, 0.5);
+    }
+
+    .animated-button:active {
+        transform: translateY(-2px) scale(0.98);
+    }
+
+    .animated-button span,
+    .animated-button i {
+        position: relative;
+        z-index: 1;
+    }
+
+    .animated-button i {
+        transition: transform 0.3s ease;
+    }
+
+    .animated-button:hover i {
+        transform: translateX(5px);
+    }
+
+    .register-footer {
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #f8f9fa, #fff);
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .register-footer p {
+        margin: 0;
+        color: #7f8c8d;
+        font-size: 0.9rem;
+    }
+
+    .register-footer a {
+        color: #2ecc71;
+        font-weight: 700;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .register-footer a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #2ecc71, #27ae60);
+        transition: width 0.3s ease;
+    }
+
+    .register-footer a:hover::after {
+        width: 100%;
+    }
+
+    .register-footer a:hover {
+        color: #27ae60;
+    }
+
+    .form-text {
+        color: #95a5a6;
+        margin-top: 5px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .register-card {
+            margin: 20px;
+        }
+
+        .register-header {
+            padding: 35px 25px;
+        }
+
+        .register-body {
+            padding: 30px 25px;
+        }
+    }
+</style>
 {% endblock %}

@@ -1,107 +1,93 @@
+
 from django.db import models
 from django.contrib.auth.models import User
+import uuid
 
-# Product Model
-
+# Categories
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    
-    def __str__(self):
-        return self.name
+    def __str__(self): return self.name
 
-
+# Products
 class Product(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    stock = models.PositiveIntegerField(default=0) 
+    stock = models.PositiveIntegerField(default=0)
     image = models.ImageField(upload_to='products/')
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='products')
     created_at = models.DateTimeField(auto_now_add=True)
     wishlist = models.BooleanField(default=False)
     featured = models.BooleanField(default=False)
+    def __str__(self): return self.name
 
-    def __str__(self):
-        return self.name
+# User Profile
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    birthday = models.DateField(null=True, blank=True)
+    def __str__(self): return f"Profile: {self.user.username}"
 
-
-# Order Model
-
-
-
-from django.db import models
-from django.contrib.auth.models import User
-from .models import Product  # Ensure Product model is imported
-import uuid
-
-
-
-import uuid
-from django.db import models
-from django.contrib.auth.models import User
-
-ORDER_STATUS_CHOICES = [
-    ("Pending", "Pending"),
-    ("Shipped", "Shipped"),
-    ("Delivered", "Delivered"),
-    ("Cancelled", "Cancelled"),
-]
-
-PAYMENT_STATUS_CHOICES = [
-    ("Pending", "Pending"),
-    ("Paid", "Paid"),
-    ("Failed", "Failed"),
-]
-
+# Orders
 class Order(models.Model):
+    ORDER_STATUS = [("Pending","Pending"), ("Shipped","Shipped"), ("Delivered","Delivered"), ("Cancelled","Cancelled")]
+    PAYMENT_STATUS = [("Pending","Pending"), ("Paid","Paid"), ("Failed","Failed")]
+    
     order_number = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey("Product", on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
-    status = models.CharField(max_length=10, choices=ORDER_STATUS_CHOICES, default="Pending")
-    payment_status = models.CharField(max_length=10, choices=PAYMENT_STATUS_CHOICES, default="Pending")
+    status = models.CharField(max_length=20, choices=ORDER_STATUS, default="Pending")
+    payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS, default="Pending")
     shipping_address = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    order_number = models.CharField(max_length=20, unique=True, blank=True, null=True)
-    payment_status = models.CharField(max_length=20, choices=[("Paid", "Paid"), ("Unpaid", "Unpaid")], default="Unpaid")  
     delivered_at = models.DateTimeField(blank=True, null=True)
-    order_number = models.CharField(max_length=20, unique=True, null=True, blank=True)  # ✅ Ensure this field exist
-
-    def __str__(self):
-        return f"Order {self.order_number} - {self.status}"
 
     def save(self, *args, **kwargs):
-        """Auto-calculate total price before saving"""
         if self.product:
             self.total_price = self.product.price * self.quantity
         super().save(*args, **kwargs)
+    
+    def __str__(self): return f"Order {str(self.order_number)[:8]}"
 
-    def get_total_price(self):
-        """Returns the total price of the order"""
-        return self.product.price * self.quantity if self.product else 0
-
-
-# Payment Model
+# Payments
 class Payment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    stripe_payment_id = models.CharField(max_length=100)
+    stripe_payment_id = models.CharField(max_length=100, blank=True, null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     paid = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self): return f"Payment {self.id}"
 
-    def __str__(self):
-        return f"Payment {self.id} - {self.user.username}"
-
+# Coupons
 class Coupon(models.Model):
     code = models.CharField(max_length=20, unique=True)
-    discount = models.DecimalField(max_digits=5, decimal_places=2, help_text="Discount percentage (e.g., 10 for 10%)")
+    discount = models.IntegerField(help_text="Discount percentage (e.g., 10 for 10%)")
     valid_from = models.DateTimeField()
     valid_to = models.DateTimeField()
     active = models.BooleanField(default=True)
+    def __str__(self): return f"{self.code} ({self.discount}%)"
 
-    def __str__(self):
-        return f"{self.code} - {self.discount}%"
+# Coupon Usage
+class CouponUsage(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    coupon = models.ForeignKey(Coupon, on_delete=models.CASCADE)
+    used_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self): return f"{self.user.username} - {self.coupon.code}"
+
+# Membership
+class Membership(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    is_member = models.BooleanField(default=False)
+    discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=10)
+
+# Wishlist
+class Wishlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="wishlist_items")
+
+# Review
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="reviews")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -109,53 +95,7 @@ class Review(models.Model):
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"{self.user.username} - {self.rating}⭐"
-class Membership(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    is_member = models.BooleanField(default=False)
-    discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=10)
-
-    def __str__(self):
-        return f"{self.user.username} - Member"
-class Wishlist(models.Model):
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="wishlist_items")  # ✅ Fix conflict
-
-    def __str__(self):
-        return f"{self.user.username} - {self.product.name}"
-
-from django.contrib.auth.models import AbstractUser
-from django.db import models
-
-class CustomUser(AbstractUser):
-    # Your custom fields here (if any)
-
-    groups = models.ManyToManyField(
-        "auth.Group",
-        related_name="customuser_set",  # Avoids conflict with Django’s default User model
-        blank=True,
-    )
-    user_permissions = models.ManyToManyField(
-        "auth.Permission",
-        related_name="customuser_permissions_set",  # Avoids conflict
-        blank=True,
-    )
-
-    def __str__(self):
-        return self.username
-class Coupon(models.Model):
-    code = models.CharField(max_length=20, unique=True)
-    discount = models.IntegerField()  # Discount percentage
-    active = models.BooleanField(default=True)
-    valid_from = models.DateTimeField()
-    valid_to = models.DateTimeField()
-
-    def __str__(self):
-        return f"{self.code} - {self.discount}% Off"
-    from django.db import models
-from django.contrib.auth.models import User
-
+# Address
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="addresses")
     full_name = models.CharField(max_length=255)
@@ -166,9 +106,4 @@ class Address(models.Model):
     postal_code = models.CharField(max_length=20)
     country = models.CharField(max_length=100)
     is_default = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f"{self.full_name}, {self.street_address}, {self.city}, {self.state}"
-
-    class Meta:
-        verbose_name_plural = "Addresses"
+    class Meta: verbose_name_plural = "Addresses"

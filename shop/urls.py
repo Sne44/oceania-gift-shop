@@ -7,10 +7,12 @@ from .views import order_tracking
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('shop/', views.shop_view, name='shop'),
+    path('shop/', views.shop, name='shop'),
     path('product/<int:product_id>/', views.product_detail, name='product_detail'),
     path('cart/', views.cart, name='cart'),
     path('add-to-cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    path('decrease-cart/<int:order_id>/', views.decrease_cart, name='decrease_cart'),
+    path('remove-from-cart/<int:order_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('orders/', order_tracking, name='order_tracking'),
     path('membership/subscribe/', views.subscribe_membership, name='subscribe_membership'),
     path('membership/status/', views.membership_status, name='membership_status'),
@@ -20,14 +22,11 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('fake-payment/<int:product_id>/', views.fake_payment, name='fake_payment'),
     path('payment-success/', views.payment_success, name='payment_success'),
-    path('payment-cancel/', views.payment_cancel, name='payment_cancel'),  # ✅ Removed duplicate
+    path('payment-cancel/', views.payment_cancel, name='payment_cancel'),
     path('billing/<int:order_id>/', views.billing, name='billing'),
     path('product/<int:product_id>/add-review/', views.add_review, name='add_review'), 
     path('checkout/<int:product_id>/', views.checkout, name='checkout'),
-
-
     path('order-summary/<int:order_id>/', views.order_summary, name='order_summary'),
-    
 ]
 
 if settings.DEBUG:

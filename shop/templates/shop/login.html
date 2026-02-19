@@ -4,7 +4,7 @@
 <div class="login-page-wrapper">
     <div class="container">
         <div class="row justify-content-center align-items-center" style="min-height: 85vh;">
-            <div class="col-md-6 col-lg-5">
+            <div class="col-md-5 col-lg-4">
                 <div class="login-card" data-aos="zoom-in" data-aos-duration="800">
                     <div class="login-header text-center">
                         <div class="login-icon" data-aos="flip-down" data-aos-delay="300">🔐</div>
@@ -23,7 +23,7 @@
                             {% endif %}
 
                             {% for field in form %}
-                            <div class="mb-2" data-aos="fade-right" data-aos-delay="{{ forloop.counter }}00">
+                            <div class="mb-4" data-aos="fade-right" data-aos-delay="{{ forloop.counter }}00">
                                 <label for="{{ field.id_for_label }}" class="form-label">
                                     {% if 'username' in field.name %}
                                     <i class="fas fa-user me-2"></i>
@@ -42,7 +42,7 @@
                             </div>
                             {% endfor %}
 
-                            <div class="d-grid gap-2 mt-3" data-aos="fade-up" data-aos-delay="800">
+                            <div class="d-grid gap-2 mt-4" data-aos="fade-up" data-aos-delay="800">
                                 <button type="submit" class="btn btn-primary btn-lg animated-button">
                                     <span>Login</span>
                                     <i class="fas fa-arrow-right ms-2"></i>
@@ -144,7 +144,7 @@
     .login-header {
         background: linear-gradient(135deg, #ff1493, #ff69b4, #ff8c00);
         background-size: 200% 200%;
-        padding: 25px 20px;
+        padding: 50px 30px;
         color: white;
         position: relative;
         overflow: hidden;
@@ -189,8 +189,8 @@
     }
 
     .login-icon {
-        font-size: 2.5rem;
-        margin-bottom: 8px;
+        font-size: 4.5rem;
+        margin-bottom: 20px;
         animation: iconBounce 2s ease-in-out infinite;
         position: relative;
         z-index: 1;
@@ -215,8 +215,8 @@
 
     .login-header h2 {
         font-weight: 700;
-        font-size: 1.4rem;
-        margin-bottom: 6px;
+        font-size: 2.2rem;
+        margin-bottom: 10px;
         position: relative;
         z-index: 1;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
@@ -227,18 +227,17 @@
         margin: 0;
         position: relative;
         z-index: 1;
-        font-size: 0.9rem;
+        font-size: 1.1rem;
     }
 
     .login-body {
-        padding: 20px;
+        padding: 45px 35px;
     }
 
     .login-body .form-label {
         font-weight: 600;
         color: #2c3e50;
-        font-size: 0.85rem;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
         display: flex;
         align-items: center;
     }
@@ -249,8 +248,8 @@
 
     .animated-input {
         border: 2px solid #e0e0e0;
-        border-radius: 12px;
-        padding: 8px 12px;
+        border-radius: 15px;
+        padding: 14px 20px;
         transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         background: #f8f9fa;
     }
@@ -266,10 +265,10 @@
         background: linear-gradient(135deg, #ff1493, #ff69b4, #ff8c00);
         background-size: 200% 200%;
         border: none;
-        border-radius: 12px;
-        padding: 10px;
+        border-radius: 15px;
+        padding: 16px;
         font-weight: 700;
-        font-size: 1rem;
+        font-size: 1.2rem;
         transition: all 0.4s ease;
         box-shadow: 0 10px 25px rgba(255, 20, 147, 0.4);
         position: relative;
@@ -319,7 +318,7 @@
     }
 
     .login-footer {
-        padding: 15px 20px;
+        padding: 30px 35px;
         background: linear-gradient(135deg, #f8f9fa, #fff);
         border-top: 1px solid #e0e0e0;
     }

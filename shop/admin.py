@@ -1,36 +1,39 @@
+
 from django.contrib import admin
-from .models import Product, Order, Payment
+from .models import Product, Order, Payment, Category, Coupon, Membership, Wishlist, Review, Address, UserProfile, CouponUsage
 
+# Customize Admin Site Header
+admin.site.site_header = "Oceania Gift Shop Admin"
 
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('name', 'category', 'price', 'stock', 'featured')
+    list_filter = ('category', 'featured')
+    search_fields = ('name',)
 
-
-# Register Order Model
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('user', 'product', 'quantity', 'total_price', 'status', 'created_at')
-    list_filter = ('status',)
-    search_fields = ('user__username', 'product__name')
+    list_display = ('order_number', 'user', 'product', 'quantity', 'total_price', 'status', 'created_at')
+    list_filter = ('status', 'created_at')
+    search_fields = ('order_number', 'user__username')
 
-# Register Payment Model
-@admin.register(Payment)
-class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'order', 'amount', 'paid', 'created_at')
-    list_filter = ('paid',)
-    search_fields = ('user__username', 'order__id')
-
-from .models import Coupon
+admin.site.register(Category)
+admin.site.register(Payment)
+admin.site.register(Membership)
+admin.site.register(Wishlist)
+admin.site.register(Review)
+admin.site.register(Address)
 
 @admin.register(Coupon)
 class CouponAdmin(admin.ModelAdmin):
-    list_display = ('code', 'discount', 'valid_from', 'valid_to', 'active')
+    list_display = ('code', 'discount', 'active', 'valid_from', 'valid_to')
+    list_filter = ('active',)
     search_fields = ('code',)
-    list_filter = ('active', 'valid_from', 'valid_to')
 
-from django.contrib import admin
-from .models import Product
+@admin.register(UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'birthday')
 
-class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'stock', 'featured')  # ✅ Show featured in admin
-    list_filter = ('featured',)  # ✅ Filter by featured
-
-admin.site.register(Product, ProductAdmin)
+@admin.register(CouponUsage)
+class CouponUsageAdmin(admin.ModelAdmin):
+    list_display = ('user', 'coupon', 'used_at')

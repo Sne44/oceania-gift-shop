@@ -3,61 +3,499 @@
 
 {% block content %}
 
-<!-- Welcome Section -->
-<div class="hero-section text-center mt-4" data-aos="fade-up">
-    <h1>💝 Welcome to Oceania Gift Shop 💝</h1>
-    <p>Find the perfect gifts for every occasion.</p>
-    <a href="{% url 'shop' %}" class="btn btn-primary btn-lg mt-3" data-aos="zoom-in">Shop Now</a>
-</div>
-
-<!-- 🎁 Exclusive Offers Section -->
-<div class="container mt-5">
-    <h3 class="text-center text-danger" data-aos="fade-up">🔥 Exclusive Offers 🔥</h3>
-    <div class="row">
-        <div class="col-md-4" data-aos="zoom-in">
-            <div class="offer-box bg-warning text-dark p-4 text-center">
-                <h4>🎂 Birthday Special</h4>
-                <p>Get 20% off on birthday gifts!</p>
-                <a href="{% url 'shop' %}" class="btn btn-dark">Shop Now</a>
-            </div>
-        </div>
-        <div class="col-md-4" data-aos="zoom-in">
-            <div class="offer-box bg-danger text-white p-4 text-center">
-                <h4>💖 Valentine's Collection</h4>
-                <p>Flat 25% off on couple gifts!</p>
-                <a href="{% url 'shop' %}" class="btn btn-light">Explore</a>
-            </div>
-        </div>
-        <div class="col-md-4" data-aos="zoom-in">
-            <div class="offer-box bg-success text-white p-4 text-center">
-                <h4>🎁 First Order Discount</h4>
-                <p>Use code <strong>WELCOME10</strong> for 10% off!</p>
-                <a href="{% url 'shop' %}" class="btn btn-light">Grab Now</a>
-            </div>
-        </div>
+<!-- Hero Section -->
+<div class="hero-wrapper">
+    <div class="hero-background">
+        <div class="floating-element element-1">🎁</div>
+        <div class="floating-element element-2">💝</div>
+        <div class="floating-element element-3">🎀</div>
+        <div class="floating-element element-4">✨</div>
     </div>
-</div>
 
-<!-- Featured Products -->
-<div class="container mt-5">
-    <h3 class="text-center" data-aos="fade-up">🌸 Featured Products 🌸</h3>
-    <div class="row">
-        {% for product in featured_products %}
-            <div class="col-md-4" data-aos="zoom-in">
-                <div class="card product-card">
-                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">{{ product.description }}</p>
-                        <p class="text-danger"><strong>₹{{ product.price }}</strong></p>
-                        <a href="{% url 'checkout' product.id %}" class="btn btn-primary">Buy Now</a>
+    <div class="container">
+        <div class="row align-items-center" style="min-height: 500px;">
+            <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
+                <div class="hero-content">
+                    <div class="hero-badge" data-aos="zoom-in" data-aos-delay="200">
+                        <span>🎉 New Arrivals</span>
+                    </div>
+                    <h1 class="hero-title" data-aos="fade-up" data-aos-delay="300">
+                        Find the Perfect
+                        <span class="gradient-text">Gift</span>
+                        for Every Occasion
+                    </h1>
+                    <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="400">
+                        Discover our curated collection of unique gifts that bring joy and create lasting memories.
+                    </p>
+                    <div class="hero-buttons" data-aos="fade-up" data-aos-delay="500">
+                        <a href="{% url 'shop' %}" class="btn-hero btn-hero-primary">
+                            <span>Shop Now</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="#offers" class="btn-hero btn-hero-secondary">
+                            <span>View Offers</span>
+                            <i class="fas fa-gift"></i>
+                        </a>
+                    </div>
+                    <div class="hero-stats" data-aos="fade-up" data-aos-delay="600">
+                        <div class="stat-item">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Products</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">1000+</div>
+                            <div class="stat-label">Happy Customers</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Support</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        {% empty %}
-            <p class="text-center">No featured products available.</p>
-        {% endfor %}
+            <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="300">
+                <div class="hero-image-wrapper">
+                    <div class="hero-image-bg"></div>
+                    <div class="hero-image-content">
+                        <div class="gift-box">
+                            <div class="gift-box-top"></div>
+                            <div class="gift-box-body">🎁</div>
+                            <div class="ribbon"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<style>
+    .hero-wrapper {
+        position: relative;
+        padding: 60px 0;
+        overflow: hidden;
+        background: linear-gradient(135deg, #ffb3d9 0%, #ff85c1 25%, #ffadd6 50%, #ff69b4 75%, #ffb3d9 100%);
+    }
+
+    .hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .floating-element {
+        position: absolute;
+        font-size: 3rem;
+        opacity: 0.15;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .element-1 {
+        top: 10%;
+        left: 5%;
+        animation-delay: 0s;
+    }
+
+    .element-2 {
+        top: 60%;
+        left: 15%;
+        animation-delay: 2s;
+    }
+
+    .element-3 {
+        top: 30%;
+        right: 10%;
+        animation-delay: 1s;
+    }
+
+    .element-4 {
+        bottom: 20%;
+        right: 20%;
+        animation-delay: 3s;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0) rotate(0deg);
+        }
+
+        50% {
+            transform: translateY(-30px) rotate(10deg);
+        }
+    }
+
+    .hero-content {
+        padding: 20px 0;
+    }
+
+    .hero-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #ff1493, #ff69b4);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1.2;
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+
+    .gradient-text {
+        background: linear-gradient(135deg, #ff1493, #ff8c00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        display: inline-block;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        color: #7f8c8d;
+        line-height: 1.8;
+        margin-bottom: 30px;
+        max-width: 500px;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 40px;
+        flex-wrap: wrap;
+    }
+
+    .btn-hero {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 30px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-hero::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+
+    .btn-hero:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+
+    .btn-hero span,
+    .btn-hero i {
+        position: relative;
+        z-index: 1;
+    }
+
+    .btn-hero-primary {
+        background: linear-gradient(135deg, #ff1493, #ff69b4);
+        color: white;
+        box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
+    }
+
+    .btn-hero-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(255, 20, 147, 0.5);
+        color: white;
+    }
+
+    .btn-hero-secondary {
+        background: white;
+        color: #ff1493;
+        border: 2px solid #ff1493;
+    }
+
+    .btn-hero-secondary:hover {
+        background: #ff1493;
+        color: white;
+        transform: translateY(-3px);
+    }
+
+    .hero-stats {
+        display: flex;
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #ff1493, #ff8c00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        color: #95a5a6;
+        margin-top: 5px;
+    }
+
+    .hero-image-wrapper {
+        position: relative;
+        height: 450px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hero-image-bg {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background: linear-gradient(135deg, #ff1493, #ff69b4, #ff8c00);
+        border-radius: 50%;
+        opacity: 0.1;
+        animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .hero-image-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .gift-box {
+        position: relative;
+        animation: bounce 3s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+
+    .gift-box-body {
+        font-size: 15rem;
+        filter: drop-shadow(0 20px 40px rgba(255, 20, 147, 0.3));
+    }
+
+    @media (max-width: 992px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-image-wrapper {
+            height: 300px;
+            margin-top: 40px;
+        }
+
+        .gift-box-body {
+            font-size: 10rem;
+        }
+    }
+</style>
+
+<!-- Exclusive Offers Section -->
+<div class="container offers-section" id="offers">
+    <h3 class="text-center mb-5" data-aos="fade-down" data-aos-duration="800">
+        🔥 Exclusive Offers 🔥
+    </h3>
+    <div class="row g-4">
+        <div class="col-md-4" data-aos="flip-left" data-aos-duration="1000">
+            <div class="offer-box birthday">
+                <h4>🎂 Birthday Special</h4>
+                <p>Get 20% off on birthday gifts!</p>
+                <a href="{% url 'shop' %}" class="btn">Shop Now</a>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="200">
+            <div class="offer-box valentine">
+                <h4>💖 Valentine's Collection</h4>
+                <p>Flat 25% off on couple gifts!</p>
+                <a href="{% url 'shop' %}" class="btn">Explore</a>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="flip-right" data-aos-duration="1000" data-aos-delay="400">
+            <div class="offer-box discount">
+                <h4>🎁 First Order Discount</h4>
+                <p>Use code <strong>WELCOME10</strong> for 10% off!</p>
+                <a href="{% url 'shop' %}" class="btn">Grab Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container mt-5 mb-5" data-aos="fade-up">
+    <div class="row text-center g-4">
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+            <div class="p-4">
+                <div style="font-size: 3rem; margin-bottom: 15px;">🚚</div>
+                <h5 style="color: #ff1493; font-weight: 700;">Free Shipping</h5>
+                <p style="color: #7f8c8d;">On orders above ₹500</p>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+            <div class="p-4">
+                <div style="font-size: 3rem; margin-bottom: 15px;">🎁</div>
+                <h5 style="color: #ff1493; font-weight: 700;">Gift Wrapping</h5>
+                <p style="color: #7f8c8d;">Beautiful packaging included</p>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+            <div class="p-4">
+                <div style="font-size: 3rem; margin-bottom: 15px;">💳</div>
+                <h5 style="color: #ff1493; font-weight: 700;">Secure Payment</h5>
+                <p style="color: #7f8c8d;">100% safe & secure</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- About Us Section -->
+<div class="container mt-5 mb-5">
+    <div class="row align-items-center" data-aos="fade-up">
+        <div class="col-md-6" data-aos="fade-right" data-aos-delay="100">
+            <div class="about-image-wrapper">
+                <div class="about-decoration"></div>
+                <div
+                    style="background: linear-gradient(135deg, #ff1493, #ff69b4); border-radius: 20px; padding: 60px 40px; text-align: center; position: relative; overflow: hidden; box-shadow: 0 15px 40px rgba(255,20,147,0.3);">
+                    <div style="font-size: 5rem; margin-bottom: 20px;">🎁</div>
+                    <h3 style="color: white; font-weight: 700; font-size: 2rem;">Oceania Gift Shop</h3>
+                    <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-top: 15px;">Making Every Moment
+                        Special</p>
+                    <div
+                        style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%; animation: float 6s ease-in-out infinite;">
+                    </div>
+                    <div
+                        style="position: absolute; bottom: -30px; left: -30px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%; animation: float 8s ease-in-out infinite;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" data-aos="fade-left" data-aos-delay="200">
+            <div class="about-content">
+                <h2
+                    style="font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #ff1493, #ff8c00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 20px;">
+                    💖 About Us
+                </h2>
+                <p style="font-size: 1.1rem; color: #555; line-height: 1.8; margin-bottom: 20px;">
+                    Welcome to <strong style="color: #ff1493;">Oceania Gift Shop</strong>, your one-stop destination for
+                    unique and thoughtful gifts! We believe that every occasion deserves to be celebrated with something
+                    special.
+                </p>
+                <p style="font-size: 1.1rem; color: #555; line-height: 1.8; margin-bottom: 20px;">
+                    From birthdays to anniversaries, Valentine's Day to just-because moments, we curate the perfect
+                    gifts that bring smiles and create lasting memories.
+                </p>
+                <div class="about-features mt-4">
+                    <div class="d-flex align-items-center mb-3" style="animation: slideInLeft 0.6s ease-out;">
+                        <div
+                            style="background: linear-gradient(135deg, #ff1493, #ff69b4); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; box-shadow: 0 5px 15px rgba(255,20,147,0.3);">
+                            <span style="font-size: 1.5rem;">✨</span>
+                        </div>
+                        <div>
+                            <h5 style="margin: 0; color: #2c3e50; font-weight: 600;">Curated Collections</h5>
+                            <p style="margin: 0; color: #7f8c8d; font-size: 0.95rem;">Handpicked gifts for every
+                                occasion</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3"
+                        style="animation: slideInLeft 0.6s ease-out 0.2s backwards;">
+                        <div
+                            style="background: linear-gradient(135deg, #ffd700, #ff8c00); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; box-shadow: 0 5px 15px rgba(255,140,0,0.3);">
+                            <span style="font-size: 1.5rem;">💝</span>
+                        </div>
+                        <div>
+                            <h5 style="margin: 0; color: #2c3e50; font-weight: 600;">Quality Guaranteed</h5>
+                            <p style="margin: 0; color: #7f8c8d; font-size: 0.95rem;">Premium products you can trust</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3"
+                        style="animation: slideInLeft 0.6s ease-out 0.4s backwards;">
+                        <div
+                            style="background: linear-gradient(135deg, #2ecc71, #27ae60); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; box-shadow: 0 5px 15px rgba(46,204,113,0.3);">
+                            <span style="font-size: 1.5rem;">🎉</span>
+                        </div>
+                        <div>
+                            <h5 style="margin: 0; color: #2c3e50; font-weight: 600;">Fast Delivery</h5>
+                            <p style="margin: 0; color: #7f8c8d; font-size: 0.95rem;">Quick & reliable shipping</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'shop' %}" class="btn btn-primary mt-4" style="font-size: 1.1rem;">
+                    Explore Our Collection 🛍️
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+</style>
 
 {% endblock %}
