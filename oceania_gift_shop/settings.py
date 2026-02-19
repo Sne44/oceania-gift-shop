@@ -81,7 +81,7 @@ if 'PYTHONANYWHERE_DOMAIN' in os.environ:
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'Oceaniagifts$default',  # Using the one from your screenshot
             'USER': 'Oceaniagifts',
-            'PASSWORD': 'Kuttu@4', 
+            'PASSWORD': 'Kuttumon@4', 
             'HOST': 'Oceaniagifts.mysql.pythonanywhere-services.com',
         }
     }
